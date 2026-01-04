@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宮崎紅佳里 - Software Engineer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a0e27;
+            --secondary-dark: #1a1f3a;
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+            --text-light: #e8e9ed;
+            --text-muted: #a0a4b8;
+            --gradient-start: #0a0e27;
+            --gradient-end: #1a1f3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before,
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::before {
+            background: var(--accent-gold);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation::after {
+            background: var(--accent-blue);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-greeting {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-light), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            border: 2px solid var(--accent-gold);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-label {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-light), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-blue));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 4rem;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid var(--primary-dark);
+            z-index: 1;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .timeline-company {
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .timeline-tech {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            padding: 2.5rem;
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.1s; }
+        .skill-card:nth-child(2) { animation-delay: 0.2s; }
+        .skill-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skill-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cert-card {
+            padding: 2rem;
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        .cert-card:nth-child(1) { animation-delay: 0.1s; }
+        .cert-card:nth-child(2) { animation-delay: 0.2s; }
+        .cert-card:nth-child(3) { animation-delay: 0.3s; }
+        .cert-card:nth-child(4) { animation-delay: 0.4s; }
+        .cert-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .cert-card:hover {
+            transform: translateX(10px);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .cert-badge {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .cert-info {
+            flex: 1;
+        }
+
+        .cert-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .cert-date {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-text {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 2.5rem;
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            background: rgba(10, 14, 39, 0.8);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .skills-grid,
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Projects Section */
+        .project-showcase {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 2.5rem;
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        .project-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+            direction: rtl;
+        }
+
+        .project-card:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
+        }
+
+        .project-video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: rgba(10, 14, 39, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .project-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .project-period,
+        .project-year {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-highlights {
+            margin-top: auto;
+        }
+
+        .highlights-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .highlights-list {
+            list-style: none;
+        }
+
+        .highlights-list li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .highlights-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .highlights-list li:hover {
+            color: var(--accent-gold);
+            transform: translateX(5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .project-card {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card:nth-child(even) {
+                direction: ltr;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-card {
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .project-title {
+                font-size: 1.3rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">MIYAZAKI</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-greeting">Software Engineer</div>
+                <h1 class="hero-title">宮崎紅佳里</h1>
+                <p class="hero-subtitle">Crafting elegant solutions through code</p>
+                <p class="hero-description">
+                    プログラミングの楽しさと、チームで何かを創り上げる喜びを追求するソフトウェアエンジニア。
+                    高い技術力を身につけ、社会に貢献できるエンジニアを目指しています。
+                </p>
+                <div class="hero-cta">
+                    <a href="#education" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Academic Background</div>
+                <h2 class="section-title">Education</h2>
+                <p class="section-description">
+                    学びを通じて技術の基礎を構築
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025年4月 - 現在</div>
+                        <h3 class="timeline-title">帝京大学 通信課程</h3>
+                        <div class="timeline-company">理工学部情報科学科（編入）</div>
+                        <p class="timeline-description">
+                            働きながら学びを継続し、より深い技術知識の習得を目指しています。
+                            情報科学の理論と実践の両面から学びを深めています。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022年4月 - 2024年10月</div>
+                        <h3 class="timeline-title">静岡大学</h3>
+                        <div class="timeline-company">中途退学</div>
+                        <p class="timeline-description">
+                            Javaを用いたプログラミング学習を通じて、コンピュータサイエンスの基礎を習得。
+                            授業外でも独学でRubyを学び、実務経験を積むことでエンジニアとしてのキャリアをスタートさせました。
+                            金銭的な理由から中途退学しました。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Work History</div>
+                <h2 class="section-title">Professional Experience</h2>
+                <p class="section-description">
+                    実務経験を通じて培ったスキルと、日々の学習により成長を続けています
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025年4月 - 2025年4月</div>
+                        <h3 class="timeline-title">Software Engineer</h3>
+                        <div class="timeline-company">saison-office合同会社</div>
+                        <p class="timeline-description">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年10月 - 2025年3月</div>
+                        <h3 class="timeline-title">Frontend Developer</h3>
+                        <div class="timeline-company">フューチャー・アンティークス株式会社</div>
+                        <p class="timeline-description">
+                            ランディングページの作成を担当。HTML/CSS/JavaScriptを使用して、
+                            クライアントのニーズに応える効果的なWebページを制作しました。
+                        </p>
+                        <div class="timeline-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023年11月 - 2024年6月</div>
+                        <h3 class="timeline-title">Software Engineer Intern</h3>
+                        <div class="timeline-company">ユースタイルラボラトリー株式会社</div>
+                        <p class="timeline-description">
+                            介護事業所向け支援サービス「careid」の開発に参画。
+                            アジャイル開発の経験を積み、技術力の高いチームメンバーから多くを学びました。
+                        </p>
+                        <div class="timeline-tech">
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">Laravel</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Vue.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023年6月 - 2023年11月</div>
+                        <h3 class="timeline-title">Software Engineer</h3>
+                        <div class="timeline-company">株式会社Mock Up（業務委託）</div>
+                        <p class="timeline-description">
+                            オンライン診療サービス「おうち病院」の開発・運用・保守を担当。
+                            初めてのチーム開発で、コードレビューを通じて技術力を大きく向上させました。
+                        </p>
+                        <div class="timeline-tech">
+                            <span class="tech-tag">Ruby</span>
+                            <span class="tech-tag">Rails</span>
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Personal Work</div>
+                <h2 class="section-title">Projects</h2>
+                <p class="section-description">
+                    自主的に取り組んだ開発プロジェクト
+                </p>
+            </div>
+
+            <div class="project-showcase">
+                <div class="project-card">
+                    <div class="project-video-container">
+                        <video controls class="project-video">
+                            <source src="hamatan録画.mp4" type="video/mp4">
+                            お使いのブラウザは動画タグをサポートしていません。
+                        </video>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">大学授業レビューアプリ</h3>
+                        <div class="project-meta">
+                            <span class="project-period">📅 作成期間: 約1ヶ月</span>
+                            <span class="project-year">🗓️ 2023年（大学2年生）</span>
+                        </div>
+                        <p class="project-description">
+                            大学2年生の時にRuby on Railsを使用して大学の授業レビューアプリを作成しました。
+                            作成期間は約一ヶ月です。当時はコーディングAIがなかったので、100パーセント自分の実力で作りました。
+                            拙いところはたくさんありますが、その時の実力を示すものとして当時のままにしてあります。
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Ruby on Rails</span>
+                            <span class="tech-tag">Ruby</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-highlights">
+                            <h4 class="highlights-title">主な機能</h4>
+                            <ul class="highlights-list">
+                                <li>授業の登録・検索・閲覧機能</li>
+                                <li>授業レビューの投稿・評価システム</li>
+                                <li>ユーザー認証機能</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Technical Expertise</div>
+                <h2 class="section-title">Skills & Technologies</h2>
+                <p class="section-description">
+                    実務と学習を通じて習得した技術スタック
+                </p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="skill-title">Backend Development</h3>
+                    <ul class="skill-list">
+                        <li>Ruby / Ruby on Rails (6ヶ月)</li>
+                        <li>PHP / Laravel (7ヶ月)</li>
+                        <li>Java (基礎)</li>
+                        <li>Python(競プロ)</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h3 class="skill-title">Frontend Development</h3>
+                    <ul class="skill-list">
+                        <li>Vue.js (実務経験)</li>
+                        <li>TypeScript / JavaScript</li>
+                        <li>HTML5 / CSS3</li>
+                        <li>レスポンシブデザイン</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🛠️</div>
+                    <h3 class="skill-title">Tools & Others</h3>
+                    <ul class="skill-list">
+                        <li>Git / GitHub</li>
+                        <li>AWS Cloud Services</li>
+                        <li>アジャイル開発手法</li>
+                        <li>チーム開発経験</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Achievements</div>
+                <h2 class="section-title">Certifications</h2>
+                <p class="section-description">
+                    技術力を証明する資格と認定
+                </p>
+            </div>
+
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-badge">🏆</div>
+                    <div class="cert-info">
+                        <div class="cert-name">基本情報技術者試験</div>
+                        <div class="cert-date">2024年9月</div>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">☕</div>
+                    <div class="cert-info">
+                        <div class="cert-name">OracleMaster Java Silver SE11</div>
+                        <div class="cert-date">2024年10月</div>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">☁️</div>
+                    <div class="cert-info">
+                        <div class="cert-name">AWS クラウドプラクティショナー</div>
+                        <div class="cert-date">2024年12月</div>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">🌐</div>
+                    <div class="cert-info">
+                        <div class="cert-name">TOEIC 855点</div>
+                        <div class="cert-date">2023年3月</div>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-badge">🚗</div>
+                    <div class="cert-info">
+                        <div class="cert-name">普通自動車第一種運転免許</div>
+                        <div class="cert-date">2020年2月</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">Let's Connect</div>
+                <h2 class="section-title">Get In Touch</h2>
+            </div>
+
+            <div class="contact-content">
+                <p class="contact-text">
+                    新しい挑戦や協力の機会を常に歓迎しています。<br>
+                    お気軽にご連絡ください。
+                </p>
+
+                <div class="contact-links">
+                    <a href="https://github.com/MiyazakiAkari" target="_blank" class="contact-link">
+                        <span class="contact-icon">💻</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="mailto:akarimiyazaki4211@gmail.com" class="contact-link">
+                        <span class="contact-icon">✉️</span>
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 宮崎紅佳里. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active navigation highlight on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.bg-animation');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Project Card Animation on Scroll
+        const projectObserverOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const projectObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, projectObserverOptions);
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            projectObserver.observe(card);
+        });
+
+        // Video lazy loading
+        const videos = document.querySelectorAll('.project-video');
+        if ('IntersectionObserver' in window) {
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const video = entry.target;
+                        if (video.getAttribute('data-loaded') !== 'true') {
+                            video.play().catch(() => {
+                                // Auto-play policy may prevent this
+                            });
+                            video.setAttribute('data-loaded', 'true');
+                        }
+                    }
+                });
+            });
+            videos.forEach(video => videoObserver.observe(video));
+        }
+    </script>
+</body>
+</html>
